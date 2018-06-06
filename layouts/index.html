@@ -13,34 +13,20 @@
 -->
 {{ partial "header.html" . }}
 <div class="main-section">
-    <div class="container">
-              <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Disclaimer</div>
-                      <div class="panel-body">
-                          <img class="pull-right" src="apache_incubator.png" alt="Apache Incubator"></img>
-                          Apache Ratis is an effort undergoing <a href="https://incubator.apache.org">incubation</a> at
-                          <a href="https://www.apache.org">The Apache Software Foundation (ASF)</a>, sponsored by the Apache Incubator PMC.
-                          Incubation is required of all newly accepted projects until a further review indicates that the infrastructure,
-                          communications, and decision making process have stabilized in a manner consistent with other successful ASF projects.
-                          While incubation status is not necessarily a reflection of the completeness or stability of the code,
-                          it does indicate that the project has yet to be fully endorsed by the ASF.
-                      </div>
-                    </div>
-                  </div>
-              </div>
-    </div>
+
 </div>
 
-<div class="whatis bg-light">
+<div class="whatis">
     <div class="container">
         <div class="row header">
-            <h2>What is Apache Ratis&trade;?</h2>
+            <h2>What is Apache Hadoop Ozone?</h2>
             <p class="lead">
-                Apache Ratis is a highly customizable Raft protocol implementation in Java.</p>
-            <p class="lead"><a href="https://raft.github.io/">Raft</a> is a easily understandable consensus algorithm to manage replicated state.</p>
-            <p class="lead">Apache Ratis could be used in any Java application where state should be replicated between multiple instances.</p>
+                Ozone is a new subproject of Apache Hadoop. It provides an
+                 object store semantic (something like s3) for Hadoop.</p>
+            <p class="lead">It's based on HDDS (aka Hadoop Distributed Data Storage)
+               which is an other new for Apache Hadoop. It provides a storage
+               layer for other higher level componets (such as Ozone)
+            </p>
             </p>
             <p></p>
         </div>
@@ -48,37 +34,39 @@
 </div>
 
 
-<div class="main-section feature-list-group">
+<div class="main-section feature-list-group" style="padding: 80px;">
     <div class="container">
         <div class="row feature-list">
-            <h2>Features</h2>
             <div class="col-md-4 col-sm-4 feature-item">
-                <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                <i class="fa fa-5x fa-fw m-y-3 text-info fa-child"></i>
-                <h4>Pluggable transport</h4>
+
+                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Scalable</h4>
                 <p>
-                    Ratis provides a pluggable transport layer. By default gRPC, Netty+Protobuf and Apache Hadoop RPC based transports are provided.
+                 Ozone is designed to scale to tens of billions of files and
+                 blocks and, in the future, to every larger number of
+                 smaller objects.
                 </p>
                 <p>
-
+                  Small files or huge number of datanodes and block reports are
+                  no longer problems.
                 </p>
                 <p></p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                <h4>Pluggable state machine</h4>
+                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                   Consistent</h4>
                 <p>
-                    Ratis supports a log and state machine. State machine typically contains the data that you want to make highly avialable. Ratis makes it easy to use your own state machine.
+                    Using of RAFT protocol has allowed the storage layer to
+                    be self-consistent.
                 </p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
-                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
-                <h4>Pluggable raft log</h4>
-                <p>RAFT log is also pluggable, users can provide their own log implementation. The default
-                    implementation
-                    stores log in local files.</p>
-                <p>
-                    Application can define the polices of how to write data and where it should be written easily.
+                <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud-native</h4>
+                <p>Hadoop Ozone works well in containerized environment.
+                </p><p>
+                  Quadra
+                  is a new component based on the HDDS storage layer which
+                  could provide provide raw device access to Kubernetes or any
+                  other CNI compatible cloud solutions.
                 </p>
             </div>
 
@@ -90,107 +78,32 @@
 </div><!-- /.feature-list-group -->
 
 
-<a name="news"></a>
-<div class="main-section bg-light">
-    <div class="container">
-        <div class="row header">
-            <h2>Latest news</h2>
-            {{ range where .Data.Pages "Section" "post" }}
-            <div class="panel-heading clearfix"><a class="pull-left" href="{{.URL}}">{{.Title}}</a>
-                <small class="pull-right">{{dateFormat "2006 Jan 2 " .Date}}</small>
-            </div>
-            {{end}}
-        </div>
-    </div>
-</div>
-
-<a name="download"></a>
+<a name="qa"></a>
 <div class="main-section">
     <div class="container">
         <div class="row header">
-            <h2>Download</h2>
-
-            <p>Apache Ratis is a Java <b>library</b> that can be used directly from your applications.</p>
-
-            <p>It is released as source code tarballs. The downloads are distributed via mirror sites and should be checked
-                for tampering using <a href="https://www.apache.org/info/verification.html">GPG or SHA-256</a></p>
-            <p>
-
-            <p>The source tarball contains detailed instruction about how can it be built.</p>
-
-            <p>The binaries are also uploaded to the maven central for convenience. (See the getting started guide for more details)</p>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Version</th>
-                    <th>Release date</th>
-                    <th>Source download</th>
-                    <th>Announcement</th>
-                </tr>
-                </thead>
-                {{range first 5 (where .Site.Pages ".Params.type" "release")}}
-                <tr>
-                    <td>{{.BaseFileName }}</td>
-                    <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
-                    <td>
-                        <a href="https://www.apache.org/dyn/closer.cgi/incubator/ratis/{{.BaseFileName }}/apache-ratis-incubating-{{.BaseFileName }}-src.tar.gz">source</a>
-                        (<a href="https://dist.apache.org/repos/dist/release/incubator/ratis/{{.BaseFileName }}/apache-ratis-incubating-{{.BaseFileName }}-src.tar.gz.mds">checksum</a>
-                        <a href="https://dist.apache.org/repos/dist/release/incubator/ratis/{{.BaseFileName }}/apache-ratis-incubating-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
-                    </td>
-                  
-                    <td>
-                        <a href="post/{{.BaseFileName }}.html">Announcement</a>
-                    </td>
-                </tr>
-                {{end}}
-            </table>
+            <h2>Question and Answers</h2>
+            <h3>Where can I download it?</h3>
+            <p>Apache Hadoop Ozone is not yet released. It's developed on
+              the trunk branch of Apache Hadoop. And short-term will be released
+            independently from the main Hadoop release.</p>
+            <h3>How can I contribute</h3>
+            <p>The contribution process is the same with any other
+              <a href="https://wiki.apache.org/hadoop/HowToContribute">
+                Hadoop subproject.</a></p>
+            <h3>Does it mean a new Hadoop server component?</h3>
+              <p>The worker part of Ozone/HDDS can be started as a HDFS
+                Datanode plugin. Both Ozone and HDDS requires one additional
+                master component (Ozone Manager and Storage Container Manger)
             </p>
-
-
+            <h3>How can I try it out?</h3>
+              <p>There is a
+                <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda</a>
+                which could be used. Please note that it contains
+                 a demonstration verison which is not released by Apache.</p>
+              <p>For the Apache version you can download and build the latest versoin
+                from trunk</p>
         </div>
     </div>
 </div>
-
-<a name="gettingstarted"></a>
-<div class="main-section bg-light">
-    <div class="container">
-        <div class="row header">
-            {{range where .Site.Pages "Title" "Getting started"}}
-            <h2>{{.Title}}</h2>
-            {{.Content}}
-            {{end}}
-        </div>
-    </div>
-</div>
-
-<a name="community"></a>
-<div class="main-section">
-    <div class="container">
-        <div class="row header">
-            {{range where .Site.Pages "Title" "Community"}}
-            <h2>{{.Title}}</h2>
-            {{.Content}}
-            {{end}}
-        </div>
-    </div>
-</div>
-
-<a name="source"></a>
-<div class="main-section bg-light">
-    <div class="container">
-        <div class="row header">
-            {{range where .Site.Pages "Title" "Source"}}
-            <h2>{{.Title}}</h2>
-            {{.Content}}
-            {{end}}
-        </div>
-    </div>
-</div>
-
-<a name="source"></a>
-
-
-
-
-
 {{ partial "footer.html" . }}
