@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.29" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="Hadoop Ozone Documentation">
+
+    <title>Documentation for Apache Hadoop Ozone</title>
+
+    
+    <link href="/docs/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/docs/css/ozonedoc.css" rel="stylesheet">
+
+  </head>
+
+
+  <body>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Apache Hadoop Ozone/HDDS documentation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/apache/hadoop">Source</a></li>
+        <li><a href="https://hadoop.apache.org">Apache Hadoop</a></li>
+        <li><a href="https://apache.org">ASF</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    
+    
+        
+            <li class="active">
+                <a href="/docs/">
+                    
+                    <span>Ozone Overview</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/gettingstarted/">
+                    
+                    <span>Getting started</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/commandshell/">
+                    
+                    <span>Command Shell</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/metrics/">
+                    
+                    <span>Metrics</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/rest/">
+                    
+                    <span>Ozone REST API</span>
+                </a>
+            </li>
+        
+    
+  </ul>
+
+</div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    
+
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p> Ozone is an Object store for Apache Hadoop. It aims to scale to billions of
+keys.  The following is a high-level overview of the core components of Ozone.  </p>
+
+<p><img src="./OzoneOverview.png" alt="Ozone Architecture Overview" />   </p>
+
+<p>The main elements of Ozone are :</p>
+
+<h2 id="clients">Clients</h2>
+
+<p>Ozone ships with a set of ready-made clients. They are  Ozone CLI and Freon. </p>
+
+<ul>
+<li><p><a href="./OzoneCommandShell.html">Ozone CLI</a> is the command line interface like &lsquo;hdfs&rsquo; command. </p></li>
+
+<li><p>Freon is a  load generation tool for Ozone. </p></li>
+</ul>
+
+<h2 id="rest-handler">REST Handler</h2>
+
+<p>Ozone provides both an RPC (Remote Procedure Call) as well as a  REST
+(Representational State Transfer) style interface. This allows clients to be
+written in many languages quickly. Ozone strives to maintain a similar
+interface between REST and RPC. The Rest handler offers the REST protocol
+services of Ozone.</p>
+
+<p>For most purposes, a client can make one line change to switch from REST to
+RPC or vice versa.   </p>
+
+<h2 id="ozone-file-system">Ozone File System</h2>
+
+<p>Ozone file system (TODO: Add documentation) is a Hadoop compatible file system.
+This is the important user-visible component of ozone.
+This allows Hadoop services and applications like Hive/Spark to run against
+Ozone without any change.</p>
+
+<h2 id="ozone-client">Ozone Client</h2>
+
+<p>This is like DFSClient in HDFS. This acts as the standard client to talk to
+Ozone. All other components that we have discussed so far rely on Ozone client
+(TODO: Add Ozone client documentation). </p>
+
+<h2 id="key-space-manager">Key Space Manager </h2>
+
+<p>Key Space Manager(KSM) takes care of the Ozone&rsquo;s namespace.
+All ozone entities like volumes, buckets and keys are managed by KSM
+(TODO: Add KSM documentation). In Short, KSM is the metadata manager for Ozone.
+KSM talks to blockManager(SCM) to get blocks and passes it on to the Ozone
+client.  Ozone client writes data to these blocks.
+KSM will eventually be replicated via Apache Ratis for High Availability. </p>
+
+<h2 id="storage-container-manager">Storage Container Manager</h2>
+
+<p>Storage Container Manager (SCM) is the block and cluster manager for Ozone.
+SCM along with data nodes offer a service called &lsquo;containers&rsquo;.
+A container is a group unrelated of blocks that are managed together
+as a single entity.</p>
+
+<p>SCM offers the following abstractions.  </p>
+
+<p><img src="../SCMBlockDiagram.png" alt="SCM Abstractions" /></p>
+
+<h3 id="blocks">Blocks</h3>
+
+<p>Blocks are like blocks in HDFS. They are replicated store of data.</p>
+
+<h3 id="containers">Containers</h3>
+
+<p>A collection of blocks replicated and managed together.</p>
+
+<h3 id="pipelines">Pipelines</h3>
+
+<p>SCM allows each container to choose its method of replication.
+For example, a container might decide that it needs only one copy of a  block
+and might choose a stand-alone pipeline. Another container might want to have
+a very high level of reliability and pick a RATIS based pipeline. In other
+words, SCM allows different kinds of replication strategies to co-exist.</p>
+
+<h3 id="pools">Pools</h3>
+
+<p>A group of data nodes is called a pool. For scaling purposes,
+we define a pool as a set of machines. This makes management of datanodes
+easier.</p>
+
+<h3 id="nodes">Nodes</h3>
+
+<p>The data node where data is stored.</p>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+<script src="/docs/js/jquery.min.js"></script>
+<script src="/docs/js/ozonedoc.js"></script>
+<script src="/docs/js/bootstrap.min.js"></script>
+
+
+  </body>
+</html>

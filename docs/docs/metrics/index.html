@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="Hadoop Ozone Documentation">
+
+    <title>Documentation for Apache Hadoop Ozone</title>
+
+    
+    <link href="/docs/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/docs/css/ozonedoc.css" rel="stylesheet">
+
+  </head>
+
+
+  <body>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Apache Hadoop Ozone/HDDS documentation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/apache/hadoop">Source</a></li>
+        <li><a href="https://hadoop.apache.org">Apache Hadoop</a></li>
+        <li><a href="https://apache.org">ASF</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    
+    
+        
+            <li class="">
+                <a href="/docs/">
+                    
+                    <span>Ozone Overview</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/gettingstarted/">
+                    
+                    <span>Getting started</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/commandshell/">
+                    
+                    <span>Command Shell</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="active">
+                <a href="/docs/metrics/">
+                    
+                    <span>Metrics</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/rest/">
+                    
+                    <span>Ozone REST API</span>
+                </a>
+            </li>
+        
+    
+  </ul>
+
+</div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              
+
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<h1 id="hdfs-ozone-metrics">HDFS Ozone Metrics</h1>
+
+<!-- MACRO{toc|fromDepth=0|toDepth=3} -->
+
+<h2 id="overview">Overview</h2>
+
+<p>The container metrics that is used in HDFS Ozone.</p>
+
+<h3 id="storage-container-metrics">Storage Container Metrics</h3>
+
+<p>The metrics for various storage container operations in HDFS Ozone.</p>
+
+<p>Storage container is an optional service that can be enabled by setting
+&lsquo;ozone.enabled&rsquo; to true.
+These metrics are only available when ozone is enabled.</p>
+
+<p>Storage Container Metrics maintains a set of generic metrics for all
+container RPC calls that can be made to a datandoe/container.</p>
+
+<p>Along with the total number of RPC calls containers maintain a set of metrics
+for each RPC call. Following is the set of counters maintained for each RPC
+operation.</p>
+
+<p><em>Total number of operation</em> - We maintain an array which counts how
+many times a specific operation has been performed.
+Eg.<code>NumCreateContainer</code> tells us how many times create container has been
+invoked on this datanode.</p>
+
+<p><em>Total number of pending operation</em> - This is an array which counts how
+many times a specific operation is waitting to be processed from the client
+point of view.
+Eg.<code>NumPendingCreateContainer</code> tells us how many create container requests that
+waitting to be processed.</p>
+
+<p><em>Average latency of each pending operation in nanoseconds</em> - The average latency
+of the operation from the client point of view.
+Eg. <code>CreateContainerLatencyAvgTime</code> - This tells us the average latency of
+Create Container from the client point of view.</p>
+
+<p><em>Number of bytes involved in a specific command</em> - This is an array that is
+maintained for all operations, but makes sense only for read and write
+operations.</p>
+
+<p>While it is possible to read the bytes in update container, it really makes
+no sense, since no data stream involved. Users are advised to use this
+metric only when it makes sense. Eg. <code>BytesReadChunk</code> &ndash; Tells us how
+many bytes have been read from this data using Read Chunk operation.</p>
+
+<p><em>Average Latency of each operation</em> - The average latency of the operation.
+Eg. <code>LatencyCreateContainerAvgTime</code> - This tells us the average latency of
+Create Container.</p>
+
+<p><em>Quantiles for each of these operations</em> - The 50/75/90/95/99th percentile
+of these operations. Eg. <code>CreateContainerNanos60s50thPercentileLatency</code> &ndash;
+gives latency of the create container operations at the 50th percentile latency
+(1 minute granularity). We report 50th, 75th, 90th, 95th and 99th percentile
+for all RPCs.</p>
+
+<p>So this leads to the containers reporting these counters for each of these
+RPC operations.</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>NumOps</code></td>
+<td align="left">Total number of container operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>CreateContainer</code></td>
+<td align="left">Create container operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>ReadContainer</code></td>
+<td align="left">Read container operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>UpdateContainer</code></td>
+<td align="left">Update container operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>DeleteContainer</code></td>
+<td align="left">Delete container operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>ListContainer</code></td>
+<td align="left">List container operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>PutKey</code></td>
+<td align="left">Put key operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>GetKey</code></td>
+<td align="left">Get key operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>DeleteKey</code></td>
+<td align="left">Delete key operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>ListKey</code></td>
+<td align="left">List key operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>ReadChunk</code></td>
+<td align="left">Read chunk operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>DeleteChunk</code></td>
+<td align="left">Delete chunk operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>WriteChunk</code></td>
+<td align="left">Write chunk operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>ListChunk</code></td>
+<td align="left">List chunk operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>CompactChunk</code></td>
+<td align="left">Compact chunk operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>PutSmallFile</code></td>
+<td align="left">Put small file operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>GetSmallFile</code></td>
+<td align="left">Get small file operations</td>
+</tr>
+
+<tr>
+<td align="left"><code>CloseContainer</code></td>
+<td align="left">Close container operations</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="storage-container-manager-metrics">Storage Container Manager Metrics</h3>
+
+<p>The metrics for containers that managed by Storage Container Manager.</p>
+
+<p>Storage Container Manager (SCM) is a master service which keeps track of
+replicas of storage containers. It also manages all data nodes and their
+states, dealing with container reports and dispatching commands for execution.</p>
+
+<p>Following are the counters for containers:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>LastContainerReportSize</code></td>
+<td align="left">Total size in bytes of all containers in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportUsed</code></td>
+<td align="left">Total number of bytes used by all containers in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportKeyCount</code></td>
+<td align="left">Total number of keys in all containers in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportReadBytes</code></td>
+<td align="left">Total number of bytes have been read from all containers in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportWriteBytes</code></td>
+<td align="left">Total number of bytes have been written into all containers in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportReadCount</code></td>
+<td align="left">Total number of times containers have been read from in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>LastContainerReportWriteCount</code></td>
+<td align="left">Total number of times containers have been written to in latest container report that SCM received from datanode</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportSize</code></td>
+<td align="left">Total size in bytes of all containers over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportUsed</code></td>
+<td align="left">Total number of bytes used by all containers over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportKeyCount</code></td>
+<td align="left">Total number of keys in all containers over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportReadBytes</code></td>
+<td align="left">Total number of bytes have been read from all containers over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportWriteBytes</code></td>
+<td align="left">Total number of bytes have been written into all containers over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportReadCount</code></td>
+<td align="left">Total number of times containers have been read from over whole cluster</td>
+</tr>
+
+<tr>
+<td align="left"><code>ContainerReportWriteCount</code></td>
+<td align="left">Total number of times containers have been written to over whole cluster</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="key-space-metrics">Key Space Metrics</h3>
+
+<p>The metrics for various key space manager operations in HDFS Ozone.</p>
+
+<p>key space manager (KSM) is a service that similar to the Namenode in HDFS.
+In the current design of KSM, it maintains metadata of all volumes, buckets and keys.
+These metrics are only available when ozone is enabled.</p>
+
+<p>Following is the set of counters maintained for each key space operation.</p>
+
+<p><em>Total number of operation</em> - We maintain an array which counts how
+many times a specific operation has been performed.
+Eg.<code>NumVolumeCreate</code> tells us how many times create volume has been
+invoked in KSM.</p>
+
+<p><em>Total number of failed operation</em> - This type operation is opposite to the above
+operation.
+Eg.<code>NumVolumeCreateFails</code> tells us how many times create volume has been invoked
+failed in KSM.</p>
+
+<p>Following are the counters for each of key space operations.</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>VolumeCreate</code></td>
+<td align="left">Create volume operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>VolumeUpdates</code></td>
+<td align="left">Update volume property operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>VolumeInfos</code></td>
+<td align="left">Get volume information operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>VolumeCheckAccesses</code></td>
+<td align="left">Check volume access operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>VolumeDeletes</code></td>
+<td align="left">Delete volume operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>VolumeLists</code></td>
+<td align="left">List volume operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketCreates</code></td>
+<td align="left">Create bucket operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketInfos</code></td>
+<td align="left">Get bucket information operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketUpdates</code></td>
+<td align="left">Update bucket property operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketDeletes</code></td>
+<td align="left">Delete bucket operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketLists</code></td>
+<td align="left">List bucket operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyAllocate</code></td>
+<td align="left">Allocate key operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyLookup</code></td>
+<td align="left">Look up key operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyDeletes</code></td>
+<td align="left">Delete key operation</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyLists</code></td>
+<td align="left">List key operation</td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+<script src="/docs/js/jquery.min.js"></script>
+<script src="/docs/js/ozonedoc.js"></script>
+<script src="/docs/js/bootstrap.min.js"></script>
+
+
+  </body>
+</html>

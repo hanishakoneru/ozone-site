@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ozone Overview on Ozone</title>
+    <link>http://ozone.anzix.net/docs/</link>
+    <description>Recent content in Ozone Overview on Ozone</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://ozone.anzix.net/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting started</title>
+      <link>http://ozone.anzix.net/docs/gettingstarted/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ozone.anzix.net/docs/gettingstarted/</guid>
+      <description>Ozone - Object store for Hadoop Introduction Ozone is an object store for Hadoop. It is a redundant, distributed object store build by leveraging primitives present in HDFS. Ozone supports REST API for accessing the store.
+Getting Started Ozone is a work in progress and currently lives in the hadoop source tree. The subprojects (ozone/hdds) are part of the hadoop source tree but by default not compiled and not part of the official releases.</description>
+    </item>
+    
+    <item>
+      <title>Command Shell</title>
+      <link>http://ozone.anzix.net/docs/commandshell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ozone.anzix.net/docs/commandshell/</guid>
+      <description>Ozone Command Shell Ozone command shell gives a command shell interface to work against ozone. Please note that this document assumes that cluster is deployed with simple authentication.
+The Ozone commands take the following format.
+ ozone oz --command_ http://hostname:port/volume/bucket/key -user &amp;lt;name&amp;gt; -root  The port specified in command should match the port mentioned in the config property hdds.rest.http-address. This property can be set in ozone-site.xml. The default value for the port is 9880 and is used in below commands.</description>
+    </item>
+    
+    <item>
+      <title>Metrics</title>
+      <link>http://ozone.anzix.net/docs/metrics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ozone.anzix.net/docs/metrics/</guid>
+      <description>HDFS Ozone Metrics Overview The container metrics that is used in HDFS Ozone.
+Storage Container Metrics The metrics for various storage container operations in HDFS Ozone.
+Storage container is an optional service that can be enabled by setting &amp;lsquo;ozone.enabled&amp;rsquo; to true. These metrics are only available when ozone is enabled.
+Storage Container Metrics maintains a set of generic metrics for all container RPC calls that can be made to a datandoe/container.</description>
+    </item>
+    
+    <item>
+      <title>Ozone REST API</title>
+      <link>http://ozone.anzix.net/docs/rest/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ozone.anzix.net/docs/rest/</guid>
+      <description>Ozone REST API&amp;rsquo;s. Overview The Ozone REST API&amp;rsquo;s allows user to access ozone via REST protocol.
+Authentication and Authorization For time being, The default authentication mode of REST API is insecure access mode, which is Simple mode. Under this mode, ozone server trusts the user name specified by client and it does not perform any authentication.
+User name can be specified in HTTP header by
+ x-ozone-user: {USER_NAME}  for example if add following header x-ozone-user: bilbo in the HTTP request, then operation will be executed as bilbo user.</description>
+    </item>
+    
+  </channel>
+</rss>

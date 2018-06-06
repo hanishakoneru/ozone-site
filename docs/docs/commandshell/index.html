@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="Hadoop Ozone Documentation">
+
+    <title>Documentation for Apache Hadoop Ozone</title>
+
+    
+    <link href="/docs/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/docs/css/ozonedoc.css" rel="stylesheet">
+
+  </head>
+
+
+  <body>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Apache Hadoop Ozone/HDDS documentation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/apache/hadoop">Source</a></li>
+        <li><a href="https://hadoop.apache.org">Apache Hadoop</a></li>
+        <li><a href="https://apache.org">ASF</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    
+    
+        
+            <li class="">
+                <a href="/docs/">
+                    
+                    <span>Ozone Overview</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/gettingstarted/">
+                    
+                    <span>Getting started</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="active">
+                <a href="/docs/commandshell/">
+                    
+                    <span>Command Shell</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/metrics/">
+                    
+                    <span>Metrics</span>
+                </a>
+            </li>
+        
+    
+        
+            <li class="">
+                <a href="/docs/rest/">
+                    
+                    <span>Ozone REST API</span>
+                </a>
+            </li>
+        
+    
+  </ul>
+
+</div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              
+
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<h1 id="ozone-command-shell">Ozone Command Shell</h1>
+
+<p>Ozone command shell gives a command shell interface to work against ozone.
+Please note that this  document assumes that cluster is deployed
+with simple authentication.</p>
+
+<p>The Ozone commands take the following format.</p>
+
+<ul>
+<li><code>ozone oz --command_ http://hostname:port/volume/bucket/key -user
+&lt;name&gt; -root</code></li>
+</ul>
+
+<p>The <em>port</em> specified in command should match the port mentioned in the config
+property <code>hdds.rest.http-address</code>. This property can be set in <code>ozone-site.xml</code>.
+The default value for the port is <code>9880</code> and is used in below commands.</p>
+
+<p>The <em>-root</em> option is a command line short cut that allows <em>ozone oz</em>
+commands to be run as the user that started the cluster. This is useful to
+indicate that you want the commands to be run as some admin user. The only
+reason for this option is that it makes the life of a lazy developer more
+easier.</p>
+
+<h2 id="ozone-volume-commands">Ozone Volume Commands</h2>
+
+<p>The volume commands allow users to create, delete and list the volumes in the
+ozone cluster.</p>
+
+<h3 id="create-volume">Create Volume</h3>
+
+<p>Volumes can be created only by Admins. Here is an example of creating a volume.</p>
+
+<ul>
+<li><code>ozone oz -createVolume http://localhost:9880/hive -user bilbo -quota
+100TB -root</code></li>
+</ul>
+
+<p>The above command creates a volume called <code>hive</code> owned by user <code>bilbo</code>. The
+<code>-root</code> option allows the command to be executed as user <code>hdfs</code> which is an
+admin in the cluster.</p>
+
+<h3 id="update-volume">Update Volume</h3>
+
+<p>Updates information like ownership and quota on an existing volume.</p>
+
+<ul>
+<li><code>ozone oz  -updateVolume  http://localhost:9880/hive -quota 500TB -root</code></li>
+</ul>
+
+<p>The above command changes the volume quota of hive from 100TB to 500TB.</p>
+
+<h3 id="delete-volume">Delete Volume</h3>
+
+<p>Deletes a Volume if it is empty.</p>
+
+<ul>
+<li><code>ozone oz -deleteVolume http://localhost:9880/hive -root</code></li>
+</ul>
+
+<h3 id="info-volume">Info Volume</h3>
+
+<p>Info volume command allows the owner or the administrator of the cluster to read meta-data about a specific volume.</p>
+
+<ul>
+<li><code>ozone oz -infoVolume http://localhost:9880/hive -root</code></li>
+</ul>
+
+<h3 id="list-volumes">List Volumes</h3>
+
+<p>List volume command can be used by administrator to list volumes of any user. It can also be used by a user to list volumes owned by him.</p>
+
+<ul>
+<li><code>ozone oz -listVolume http://localhost:9880/ -user bilbo -root</code></li>
+</ul>
+
+<p>The above command lists all volumes owned by user bilbo.</p>
+
+<h2 id="ozone-bucket-commands">Ozone Bucket Commands</h2>
+
+<p>Bucket commands follow a similar pattern as volume commands. However bucket commands are designed to be run by the owner of the volume.
+Following examples assume that these commands are run by the owner of the volume or bucket.</p>
+
+<h3 id="create-bucket">Create Bucket</h3>
+
+<p>Create bucket call allows the owner of a volume to create a bucket.</p>
+
+<ul>
+<li><code>ozone oz -createBucket http://localhost:9880/hive/january</code></li>
+</ul>
+
+<p>This call creates a bucket called <code>january</code> in the volume called <code>hive</code>. If
+the volume does not exist, then this call will fail.</p>
+
+<h3 id="update-bucket">Update Bucket</h3>
+
+<p>Updates bucket meta-data, like ACLs.</p>
+
+<ul>
+<li><code>ozone oz -updateBucket http://localhost:9880/hive/january  -addAcl
+user:spark:rw</code></li>
+</ul>
+
+<h3 id="delete-bucket">Delete Bucket</h3>
+
+<p>Deletes a bucket if it is empty.</p>
+
+<ul>
+<li><code>ozone oz -deleteBucket http://localhost:9880/hive/january</code></li>
+</ul>
+
+<h3 id="info-bucket">Info Bucket</h3>
+
+<p>Returns information about a given bucket.</p>
+
+<ul>
+<li><code>ozone oz -infoBucket http://localhost:9880/hive/january</code></li>
+</ul>
+
+<h3 id="list-buckets">List Buckets</h3>
+
+<p>List buckets on a given volume.</p>
+
+<ul>
+<li><code>ozone oz -listBucket http://localhost:9880/hive</code></li>
+</ul>
+
+<h2 id="ozone-key-commands">Ozone Key Commands</h2>
+
+<p>Ozone key commands allows users to put, delete and get keys from ozone buckets.</p>
+
+<h3 id="put-key">Put Key</h3>
+
+<p>Creates or overwrites a key in ozone store, -file points to the file you want
+to upload.</p>
+
+<ul>
+<li><code>ozone oz -putKey  http://localhost:9880/hive/january/processed.orc  -file
+processed.orc</code></li>
+</ul>
+
+<h3 id="get-key">Get Key</h3>
+
+<p>Downloads a file from the ozone bucket.</p>
+
+<ul>
+<li><code>ozone oz -getKey  http://localhost:9880/hive/january/processed.orc  -file
+processed.orc.copy</code></li>
+</ul>
+
+<h3 id="delete-key">Delete Key</h3>
+
+<p>Deletes a key  from the ozone store.</p>
+
+<ul>
+<li><code>ozone oz -deleteKey http://localhost:9880/hive/january/processed.orc</code></li>
+</ul>
+
+<h3 id="info-key">Info Key</h3>
+
+<p>Reads  key metadata from the ozone store.</p>
+
+<ul>
+<li><code>ozone oz -infoKey http://localhost:9880/hive/january/processed.orc</code></li>
+</ul>
+
+<h3 id="list-keys">List Keys</h3>
+
+<p>List all keys in an ozone bucket.</p>
+
+<ul>
+<li><code>ozone oz -listKey  http://localhost:9880/hive/january</code></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+<script src="/docs/js/jquery.min.js"></script>
+<script src="/docs/js/ozonedoc.js"></script>
+<script src="/docs/js/bootstrap.min.js"></script>
+
+
+  </body>
+</html>
