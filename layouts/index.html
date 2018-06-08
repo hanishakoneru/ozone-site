@@ -22,10 +22,9 @@
             <h2>What is Apache Hadoop Ozone?</h2>
             <p class="lead">
                 Ozone is a new subproject of Apache Hadoop. It provides an
-                 object store semantic (something like s3) for Hadoop.</p>
-            <p class="lead">It's based on HDDS (aka Hadoop Distributed Data Storage)
-               which is an other new for Apache Hadoop. It provides a storage
-               layer for other higher level componets (such as Ozone)
+                 object store semantic for Hadoop.</p>
+            <p class="lead">It uses Hadoop Distributed Data Storage (HDDS) for storage layer. HDDS is 
+             another new subporoject of Apache Hadoop.
             </p>
             </p>
             <p></p>
@@ -42,12 +41,10 @@
                 <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Scalable</h4>
                 <p>
                  Ozone is designed to scale to tens of billions of files and
-                 blocks and, in the future, to every larger number of
-                 smaller objects.
+                 blocks and, in the future, even more.
                 </p>
                 <p>
-                  Small files or huge number of datanodes and block reports are
-                  no longer problems.
+                  Small files or huge number of datanodes are no longer a limitation.
                 </p>
                 <p></p>
             </div>
@@ -55,17 +52,16 @@
                 <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
                    Consistent</h4>
                 <p>
-                    Using of RAFT protocol has allowed the storage layer to
-                    be self-consistent.
+                    Storage Layer uses RAFT protocol for consistentency.
                 </p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
                 <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud-native</h4>
-                <p>Hadoop Ozone works well in containerized environment.
+                <p>Hadoop Ozone is designed to work well in containerized environment.
                 </p><p>
                   Quadra
                   is a new component based on the HDDS storage layer which
-                  could provide provide raw device access to Kubernetes or any
+                  could provide raw device access to Kubernetes or any
                   other CNI compatible cloud solutions.
                 </p>
             </div>
@@ -84,25 +80,26 @@
         <div class="row header">
             <h2>Question and Answers</h2>
             <h3>Where can I download it?</h3>
-            <p>Apache Hadoop Ozone is not yet released. It's developed on
-              the trunk branch of Apache Hadoop. And short-term will be released
-            independently from the main Hadoop release.</p>
+            <p>Apache Hadoop Ozone is not yet released. It's being actively developed on
+              the trunk branch of Apache Hadoop. It will be released independently from
+              the main Hadoop release.</p>
             <h3>How can I contribute</h3>
-            <p>The contribution process is the same with any other
+            <p>The contribution process is the same as is for any other
               <a href="https://wiki.apache.org/hadoop/HowToContribute">
                 Hadoop subproject.</a></p>
             <h3>Does it mean a new Hadoop server component?</h3>
-              <p>The worker part of Ozone/HDDS can be started as a HDFS
-                Datanode plugin. Both Ozone and HDDS requires one additional
-                master component (Ozone Manager and Storage Container Manger)
+              <p>Both Ozone and HDDS requires one additional master component - 
+               Ozone Manager and Storage Container Manger, respectively. The 
+               worker parts of Ozone/HDDS can be started as a HDFS 
+               Datanode plugin. 
             </p>
             <h3>How can I try it out?</h3>
               <p>There is a
                 <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda</a>
-                which could be used. Please note that it contains
-                 a demonstration verison which is not released by Apache.</p>
-              <p>For the Apache version you can download and build the latest versoin
-                from trunk</p>
+                which can be used to try out Ozone. Please note that this is for 
+                demostration and is not released by Apache.</p>
+              <p>For the Apache version, you can download and build the latest version
+               from <a href="https://github.com/apache/hadoop">trunk</a></p>
         </div>
     </div>
 </div>
